@@ -1,0 +1,56 @@
+﻿@page "/product/details"
+@using System.ComponentModel.DataAnnotations
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white p-4 rounded-top-4">
+                    <h3 class="mb-0 fw-bold">@stateService.SelectedProduct?.Name</h3>
+                    <button class="btn btn-secondary btn-sm rounded-pill shadow d-flex px-2"
+                            @onclick="HandleReturn">
+                        <i class="bi bi-plus-lg me-2"></i>
+                        <span class="fw-bold">&laquo; Retour à la liste</span>
+                    </button>
+                    <br />
+                    @foreach (var cat in stateService.SelectedProduct?.Categories)
+                    {
+                        <span class="badge rounded-pill bg-light text-dark border me-1">@cat.Name</span>
+                    }
+                </div>
+                <div class="card-body p-4"> 
+                        
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <p>@stateService.SelectedProduct?.Description</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Prix (€)</label>
+                                <p>@stateService.SelectedProduct?.Price €</p>
+                            </div>  
+                        </div>
+                        <div class="mb-4">
+                            
+                        </div>
+
+
+                        @* Image *@
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Image du produit</label>
+                        <img src="@(string.IsNullOrEmpty(@stateService.SelectedProduct?.ImageUrl) ? "images/placeholder.jpg" : @stateService.SelectedProduct?.ImageUrl)"
+                                     class="card-img-top h-100 w-100 object-fit-cover"
+                             alt="@@stateService.SelectedProduct?.Name">
+                        </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-primary shadow-lg floating-add-btn d-md-none" @onclick="HandleReturn">
+    <i class="bi bi-arrow-return-left fs-2"></i>
+</button>
+

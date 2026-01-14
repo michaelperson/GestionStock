@@ -1,0 +1,75 @@
+﻿@page "/products/add"
+@using System.ComponentModel.DataAnnotations
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white p-4 rounded-top-4">
+                    <h3 class="mb-0 fw-bold">Nouveau Produit</h3>
+                </div>
+                <div class="card-body p-4">
+                    <EditForm Model="@_formModel" OnValidSubmit="HandleSubmit">
+                        <DataAnnotationsValidator />
+
+                         
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nom</label>
+                            <InputText @bind-Value="_formModel.Name" class="form-control rounded-pill" placeholder="Nom du produit..." />
+                            <ValidationMessage For="@(() => _formModel.Name)" class="text-danger small" />
+                        </div>
+                         
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <InputTextArea @bind-Value="_formModel.Description" class="form-control rounded-3" rows="3" placeholder="Description détaillée..." />
+                            <ValidationMessage For="@(() => _formModel.Description)" class="text-danger small" />
+                        </div>
+
+                        <div class="row"> 
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Prix (€)</label>
+                                <InputNumber @bind-Value="_formModel.Price" class="form-control rounded-pill" />
+                                <ValidationMessage For="@(() => _formModel.Price)" class="text-danger small" />
+                            </div> 
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Stock initial</label>
+                                <InputNumber @bind-Value="_formModel.Stock" class="form-control rounded-pill" />
+                                <ValidationMessage For="@(() => _formModel.Stock)" class="text-danger small" />
+                            </div>
+                        </div>
+                         <div class="mb-4">
+                            <GestionStock.Wasm.Components.MultiSelect.MultiSelectBox Items="AllCategories" @bind-SelectedItems="MySelectedCategories"></GestionStock.Wasm.Components.MultiSelect.MultiSelectBox>
+                         </div>
+
+
+                        @* Image *@
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Image du produit</label>
+                            <InputFile OnChange="OnInputFileChange" class="form-control rounded-pill" accept="image/*" />
+                            @if (_imagePreview != null)
+                            {
+                                <div class="mt-2 text-center">
+                                    <img src="@_imagePreview" class="img-thumbnail rounded-3" style="max-height: 150px;" />
+                                </div>
+                            }
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="button" class="btn btn-light rounded-pill px-4" @onclick="GoBack">Annuler</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4" disabled="@_isSubmitting">
+                                @if (_isSubmitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Enregistrer le produit
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
